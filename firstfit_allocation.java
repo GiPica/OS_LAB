@@ -5,24 +5,24 @@ public class firstfit_allocation {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        // LINE 1: INPUT blocks, processes
+        // line 1 : we will ask user to input number of memory blocks and processes
         System.out.print("Enter number of memory blocks: ");
         int blocks = scanner.nextInt();
 
         System.out.print("Enter number of processes: ");
         int processes = scanner.nextInt();
 
-        // LINE 2: DECLARE block_size[blocks]
+        // line 2 : we will declare how much memory does a memory block has 
         int[] block_size = new int[blocks];
 
-        // LINE 3: DECLARE process_size[processes]
+        // line 3 : we will declare how much memory does a process needs
         int[] process_size = new int[processes];
 
-        // LINE 4: DECLARE allocation[processes]
-        // LINE 5: INITIALIZE allocation with -1
+        // line 4 : we will declare the allocation array
+        // line 5 : we will initialize the allocation array with -1 (empty)
         int[] allocation = new int[processes];
         for (int i = 0; i < processes; i++) {
-            allocation[i] = -1; // -1 means Not Allocated
+            allocation[i] = -1; // -1 means not allocated yet
         }
 
         // Input block sizes
@@ -39,37 +39,32 @@ public class firstfit_allocation {
             process_size[i] = scanner.nextInt();
         }
 
-        // ============================================
-        // FIRST FIT ALGORITHM (Lines 6 to 14)
-        // ============================================
+        // First Fit Allocation Algorithm 
 
-        // LINE 6: FOR i = 0 TO processes - 1
+        // line 6 : outer loop that goes thru each process 
         for (int i = 0; i < processes; i++) {
 
-            // LINE 7: FOR j = 0 TO blocks - 1
+            // line 7 : inner loop that scans each block to find the first fit for the current process
             for (int j = 0; j < blocks; j++) {
 
-                // LINE 8: IF block_size[j] >= process_size[i] THEN
+                // line 8 : IF block_size[j] >= process_size[i] 
                 if (block_size[j] >= process_size[i]) {
 
-                    // LINE 9: SET allocation[i] = j
+                    // line 9 : SET allocation[i] = j (successfully allocated the process to the block)
                     allocation[i] = j;
 
-                    // LINE 10: SET block_size[j] = block_size[j] - process_size[i]
+                    // line 10: SET block_size[j] = block_size[j] - process_size[i] (remaining memory in block)
                     block_size[j] = block_size[j] - process_size[i];
 
-                    // LINE 11: BREAK
+                    // line 11: BREAK
                     break;
 
-                } // LINE 12: END IF
+                } 
+            } 
+        } 
 
-            } // LINE 13: END FOR (inner)
+        // line 15 : print results table
 
-        } // LINE 14: END FOR (outer)
-
-        // ============================================
-        // LINE 15: PRINT Results Table
-        // ============================================
         System.out.println("\n========== FIRST FIT RESULTS ==========");
         System.out.printf("%-15s %-15s %-20s%n",
                 "Process No.", "Size (KB)", "Block Assigned");
@@ -89,7 +84,8 @@ public class firstfit_allocation {
             }
         }
 
-        // Bonus: Show remaining memory in each block
+        // showcase remaining block space after allocation
+        
         System.out.println("\n========== MEMORY BLOCK STATUS ==========");
         System.out.printf("%-15s %-15s%n", "Block No.", "Remaining (KB)");
         System.out.println("------------------------------");

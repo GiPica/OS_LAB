@@ -4,61 +4,56 @@ import java.util.Scanner;
 
 public class fifo_page {
 
+    @SuppressWarnings("ConvertToTryWithResources")
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
 
-        // =====================
-        // LINE 1: INPUT capacity
-        // =====================
+        // input the capacity of frames
         int capacity = 0;
         while (true) {
             System.out.print("Enter number of frames (capacity): ");
-            if (!scanner.hasNextInt()) {
+            if (!sc.hasNextInt()) {
                 System.out.println("[!] Invalid input. Please enter a whole number.");
-                scanner.next(); // clear bad input
+                sc.next(); //error handling for non integer input
                 continue;
             }
-            capacity = scanner.nextInt();
+            capacity = sc.nextInt();
             if (capacity <= 0) {
                 System.out.println("[!] Number of frames must be greater than 0.");
-                continue;
+                continue; //error handling for negative or zero input 
             }
             break; // valid, exit loop
         }
 
-        // =====================
-        // LINE 2: INPUT n
-        // =====================
+        // input the num of pages 
         int n = 0;
         while (true) {
             System.out.print("Enter number of pages in reference string: ");
-            if (!scanner.hasNextInt()) {
+            if (!sc.hasNextInt()) {
                 System.out.println("[!] Invalid input. Please enter a whole number.");
-                scanner.next();
+                sc.next();
                 continue;
             }
-            n = scanner.nextInt();
+            n = sc.nextInt();
             if (n <= 0) {
                 System.out.println("[!] Number of pages must be greater than 0.");
-                continue;
+                continue; //error handling for negative or zero input
             }
             break;
         }
 
-        // =====================
-        // INPUT reference string
-        // =====================
+        // input the pages 
         int[] reference_string = new int[n];
         System.out.println("Enter the page reference string (" + n + " pages, must be >= 0):");
         for (int i = 0; i < n; i++) {
             while (true) {
                 System.out.print("Page " + (i + 1) + ": ");
-                if (!scanner.hasNextInt()) {
+                if (!sc.hasNextInt()) {
                     System.out.println("[!] Invalid input. Please enter a whole number.");
-                    scanner.next();
+                    sc.next();
                     continue;
                 }
-                int page = scanner.nextInt();
+                int page = sc.nextInt();
                 if (page < 0) {
                     System.out.println("[!] Page number cannot be negative.");
                     continue;
@@ -68,16 +63,16 @@ public class fifo_page {
             }
         }
 
-        // LINE 3: DECLARE frames[]
+        // LINE 3: DECLARE frames[] , how many slots
         int[] frames = new int[capacity];
 
-        // LINE 4: DECLARE page_faults = 0
+        // LINE 4: DECLARE page_faults = 0 , to count how many page faults occur 
         int page_faults = 0;
 
-        // LINE 5: DECLARE pointer = 0
+        // LINE 5: DECLARE pointer = 0 , to keep track of the next frame to replace
         int pointer = 0;
 
-        // LINE 6: INITIALIZE frames with -1
+        // LINE 6: INITIALIZE frames with -1 , to show all frames are empty
         for (int i = 0; i < capacity; i++) {
             frames[i] = -1;
         }
@@ -100,12 +95,11 @@ public class fifo_page {
                     // LINE 11: SET page_found = true
                     page_found = true;
 
-                    // LINE 12: BREAK
                     break;
 
-                } // LINE 13: END IF
+                } 
 
-            } // LINE 14: END FOR
+            } 
 
             // LINE 15: IF page_found == false THEN
             if (page_found == false) {
@@ -141,9 +135,9 @@ public class fifo_page {
                 }
                 System.out.println("<-- Page Hit");
 
-            } // LINE 22: END IF
+            } 
 
-        } // LINE 23: END FOR
+        } 
 
         // LINE 24: PRINT Total Page Faults
         System.out.println("---------------------");
@@ -152,6 +146,6 @@ public class fifo_page {
         // LINE 25: PRINT Total Page Hits
         System.out.println("Total Page Hits   : " + (n - page_faults));
 
-        scanner.close();
+        sc.close();
     }
 }
